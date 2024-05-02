@@ -1,0 +1,32 @@
+Start with the basics of text preprocessing:
+
+Tokenization
+Stemming
+Lemmatization
+POS
+NER
+Bag of words
+Tf-idf
+Word2vec
+Word embeddings
+Then implement basic Project like sentiment analysis.
+
+Models :
+
+RNN
+Bi-RNN
+LSTM
+AFTER ALL THESE LEARN SOME ADVANCED MODELS
+
+Seq2seq
+Encoders and decoders
+Transfer learning models ( BERT)
+Main important thing is practice regularly on these concepts to make your base strong.
+
+2 - Coursera - Natural Language Processing Specialization by DeepLearning.AI
+
+
+1 - human language to sql
+2 - mr review
+3 - test summarise
+4 - 
