@@ -1,0 +1,1529 @@
+Dataset({
+    features: ['input_ids', 'attention_mask', 'labels'],
+    num_rows: 1000
+})
+Dataset({
+    features: ['input_ids', 'attention_mask', 'labels'],
+    num_rows: 10
+})
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(590)__call__()
+    588         import pdb; pdb.set_trace()
+    589         print(return_tensors)
+--> 590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(591)__call__()
+    589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+--> 591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+    593         # this might occur when we pass {..., "labels": None}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(594)__call__()
+    592         # reconvert list[None] to None if necessary
+    593         # this might occur when we pass {..., "labels": None}
+--> 594         if labels is not None and all(label is None for label in labels):
+    595             labels = None
+    596         non_labels_features = [{k: v for k, v in feature.items() if k != label_name} for feature in features]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(596)__call__()
+    594         if labels is not None and all(label is None for label in labels):
+    595             labels = None
+--> 596         non_labels_features = [{k: v for k, v in feature.items() if k != label_name} for feature in features]
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(599)__call__()
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+--> 599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+    601             non_labels_features,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(600)__call__()
+    598         # run through tokenizer without labels to ensure no side effects
+    599         batch = pad_without_fast_tokenizer_warning(
+--> 600             self.tokenizer,
+    601             non_labels_features,
+    602             padding=self.padding,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(601)__call__()
+    599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+--> 601             non_labels_features,
+    602             padding=self.padding,
+    603             max_length=self.max_length,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(602)__call__()
+    600             self.tokenizer,
+    601             non_labels_features,
+--> 602             padding=self.padding,
+    603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(603)__call__()
+    601             non_labels_features,
+    602             padding=self.padding,
+--> 603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+    605             return_tensors=return_tensors,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(604)__call__()
+    602             padding=self.padding,
+    603             max_length=self.max_length,
+--> 604             pad_to_multiple_of=self.pad_to_multiple_of,
+    605             return_tensors=return_tensors,
+    606         )
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(605)__call__()
+    603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+--> 605             return_tensors=return_tensors,
+    606         )
+    607 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(599)__call__()
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+--> 599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+    601             non_labels_features,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(609)__call__()
+    607 
+    608         # we have to pad the labels manually as we cannot rely on `tokenizer.pad` and we need them to be of the same length to return tensors
+--> 609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+    610         if labels is not None:
+    611             if no_padding:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(610)__call__()
+    608         # we have to pad the labels manually as we cannot rely on `tokenizer.pad` and we need them to be of the same length to return tensors
+    609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+--> 610         if labels is not None:
+    611             if no_padding:
+    612                 if isinstance(features[0][label_name], list):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(611)__call__()
+    609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+    610         if labels is not None:
+--> 611             if no_padding:
+    612                 if isinstance(features[0][label_name], list):
+    613                     batch["labels"] = list(labels)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(617)__call__()
+    615                     batch["labels"] = [np.concatenate([label, []]) for label in labels]
+    616             else:
+--> 617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+    618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+    619                 if self.pad_to_multiple_of is not None:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(618)__call__()
+    616             else:
+    617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+--> 618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+    619                 if self.pad_to_multiple_of is not None:
+    620                     max_label_length = (
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(619)__call__()
+    617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+    618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+--> 619                 if self.pad_to_multiple_of is not None:
+    620                     max_label_length = (
+    621                         (max_label_length + self.pad_to_multiple_of - 1)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(626)__call__()
+    624                     )
+    625 
+--> 626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+    628                     batch["labels"] = [
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(627)__call__()
+    625 
+    626                 padding_side = self.tokenizer.padding_side
+--> 627                 if isinstance(features[0][label_name], list):
+    628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(628)__call__()
+    626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+--> 628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+    630                         if padding_side == "right"
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(632)__call__()
+    630                         if padding_side == "right"
+    631                         else [self.label_pad_token_id] * (max_label_length - len(label)) + label
+--> 632                         for label in labels
+    633                     ]
+    634                 else:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(628)__call__()
+    626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+--> 628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+    630                         if padding_side == "right"
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(643)__call__()
+    641 
+    642         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
+--> 643         if batch.get("labels", None) is not None:
+    644             if return_tensors == "pt":
+    645                 import torch
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(644)__call__()
+    642         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
+    643         if batch.get("labels", None) is not None:
+--> 644             if return_tensors == "pt":
+    645                 import torch
+    646 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(648)__call__()
+    646 
+    647                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
+--> 648             elif return_tensors == "tf":
+    649                 import tensorflow as tf
+    650 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(649)__call__()
+    647                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
+    648             elif return_tensors == "tf":
+--> 649                 import tensorflow as tf
+    650 
+    651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(651)__call__()
+    649                 import tensorflow as tf
+    650 
+--> 651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+    652             else:
+    653                 batch["labels"] = np.array(batch["labels"], dtype=np.int64)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(659)__call__()
+    657         # prepare decoder_input_ids
+    658         if (
+--> 659             labels is not None
+    660             and self.model is not None
+    661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(658)__call__()
+    656 
+    657         # prepare decoder_input_ids
+--> 658         if (
+    659             labels is not None
+    660             and self.model is not None
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(660)__call__()
+    658         if (
+    659             labels is not None
+--> 660             and self.model is not None
+    661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+    662         ):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(658)__call__()
+    656 
+    657         # prepare decoder_input_ids
+--> 658         if (
+    659             labels is not None
+    660             and self.model is not None
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(661)__call__()
+    659             labels is not None
+    660             and self.model is not None
+--> 661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+    662         ):
+    663             decoder_input_ids = self.model.prepare_decoder_input_ids_from_labels(labels=batch["labels"])
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(658)__call__()
+    656 
+    657         # prepare decoder_input_ids
+--> 658         if (
+    659             labels is not None
+    660             and self.model is not None
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(663)__call__()
+    661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+    662         ):
+--> 663             decoder_input_ids = self.model.prepare_decoder_input_ids_from_labels(labels=batch["labels"])
+    664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(664)__call__()
+    662         ):
+    663             decoder_input_ids = self.model.prepare_decoder_input_ids_from_labels(labels=batch["labels"])
+--> 664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+    666         return batch
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(666)__call__()
+    664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+--> 666         return batch
+    667 
+    668 
+
+--Return--
+{'input_ids':...[  0, 322]])>}
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(666)__call__()
+    664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+--> 666         return batch
+    667 
+    668 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(290)_get_output_signature()
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+    289             test_batch = collate_fn(test_batch, **collate_fn_args)
+--> 290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+    292         tf_columns_to_signatures = {}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(283)_get_output_signature()
+    281 
+    282         test_batches = []
+--> 283         for _ in range(num_test_batches):
+    284             indices = sample(range(len(dataset)), test_batch_size)
+    285             test_batch = dataset[indices]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(284)_get_output_signature()
+    282         test_batches = []
+    283         for _ in range(num_test_batches):
+--> 284             indices = sample(range(len(dataset)), test_batch_size)
+    285             test_batch = dataset[indices]
+    286             if cols_to_retain is not None:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(285)_get_output_signature()
+    283         for _ in range(num_test_batches):
+    284             indices = sample(range(len(dataset)), test_batch_size)
+--> 285             test_batch = dataset[indices]
+    286             if cols_to_retain is not None:
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(286)_get_output_signature()
+    284             indices = sample(range(len(dataset)), test_batch_size)
+    285             test_batch = dataset[indices]
+--> 286             if cols_to_retain is not None:
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(287)_get_output_signature()
+    285             test_batch = dataset[indices]
+    286             if cols_to_retain is not None:
+--> 287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+    289             test_batch = collate_fn(test_batch, **collate_fn_args)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(288)_get_output_signature()
+    286             if cols_to_retain is not None:
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+--> 288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+    289             test_batch = collate_fn(test_batch, **collate_fn_args)
+    290             test_batches.append(test_batch)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(289)_get_output_signature()
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+--> 289             test_batch = collate_fn(test_batch, **collate_fn_args)
+    290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(590)__call__()
+    588         import pdb; pdb.set_trace()
+    589         print(return_tensors)
+--> 590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(591)__call__()
+    589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+--> 591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+    593         # this might occur when we pass {..., "labels": None}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(594)__call__()
+    592         # reconvert list[None] to None if necessary
+    593         # this might occur when we pass {..., "labels": None}
+--> 594         if labels is not None and all(label is None for label in labels):
+    595             labels = None
+    596         non_labels_features = [{k: v for k, v in feature.items() if k != label_name} for feature in features]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(596)__call__()
+    594         if labels is not None and all(label is None for label in labels):
+    595             labels = None
+--> 596         non_labels_features = [{k: v for k, v in feature.items() if k != label_name} for feature in features]
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(599)__call__()
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+--> 599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+    601             non_labels_features,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(600)__call__()
+    598         # run through tokenizer without labels to ensure no side effects
+    599         batch = pad_without_fast_tokenizer_warning(
+--> 600             self.tokenizer,
+    601             non_labels_features,
+    602             padding=self.padding,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(601)__call__()
+    599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+--> 601             non_labels_features,
+    602             padding=self.padding,
+    603             max_length=self.max_length,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(602)__call__()
+    600             self.tokenizer,
+    601             non_labels_features,
+--> 602             padding=self.padding,
+    603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(603)__call__()
+    601             non_labels_features,
+    602             padding=self.padding,
+--> 603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+    605             return_tensors=return_tensors,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(604)__call__()
+    602             padding=self.padding,
+    603             max_length=self.max_length,
+--> 604             pad_to_multiple_of=self.pad_to_multiple_of,
+    605             return_tensors=return_tensors,
+    606         )
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(605)__call__()
+    603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+--> 605             return_tensors=return_tensors,
+    606         )
+    607 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(599)__call__()
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+--> 599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+    601             non_labels_features,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(609)__call__()
+    607 
+    608         # we have to pad the labels manually as we cannot rely on `tokenizer.pad` and we need them to be of the same length to return tensors
+--> 609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+    610         if labels is not None:
+    611             if no_padding:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(610)__call__()
+    608         # we have to pad the labels manually as we cannot rely on `tokenizer.pad` and we need them to be of the same length to return tensors
+    609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+--> 610         if labels is not None:
+    611             if no_padding:
+    612                 if isinstance(features[0][label_name], list):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(611)__call__()
+    609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+    610         if labels is not None:
+--> 611             if no_padding:
+    612                 if isinstance(features[0][label_name], list):
+    613                     batch["labels"] = list(labels)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(617)__call__()
+    615                     batch["labels"] = [np.concatenate([label, []]) for label in labels]
+    616             else:
+--> 617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+    618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+    619                 if self.pad_to_multiple_of is not None:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(618)__call__()
+    616             else:
+    617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+--> 618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+    619                 if self.pad_to_multiple_of is not None:
+    620                     max_label_length = (
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(619)__call__()
+    617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+    618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+--> 619                 if self.pad_to_multiple_of is not None:
+    620                     max_label_length = (
+    621                         (max_label_length + self.pad_to_multiple_of - 1)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(626)__call__()
+    624                     )
+    625 
+--> 626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+    628                     batch["labels"] = [
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(627)__call__()
+    625 
+    626                 padding_side = self.tokenizer.padding_side
+--> 627                 if isinstance(features[0][label_name], list):
+    628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(628)__call__()
+    626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+--> 628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+    630                         if padding_side == "right"
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(632)__call__()
+    630                         if padding_side == "right"
+    631                         else [self.label_pad_token_id] * (max_label_length - len(label)) + label
+--> 632                         for label in labels
+    633                     ]
+    634                 else:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(628)__call__()
+    626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+--> 628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+    630                         if padding_side == "right"
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(643)__call__()
+    641 
+    642         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
+--> 643         if batch.get("labels", None) is not None:
+    644             if return_tensors == "pt":
+    645                 import torch
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(644)__call__()
+    642         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
+    643         if batch.get("labels", None) is not None:
+--> 644             if return_tensors == "pt":
+    645                 import torch
+    646 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(648)__call__()
+    646 
+    647                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
+--> 648             elif return_tensors == "tf":
+    649                 import tensorflow as tf
+    650 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(649)__call__()
+    647                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
+    648             elif return_tensors == "tf":
+--> 649                 import tensorflow as tf
+    650 
+    651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(651)__call__()
+    649                 import tensorflow as tf
+    650 
+--> 651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+    652             else:
+    653                 batch["labels"] = np.array(batch["labels"], dtype=np.int64)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(659)__call__()
+    657         # prepare decoder_input_ids
+    658         if (
+--> 659             labels is not None
+    660             and self.model is not None
+    661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(658)__call__()
+    656 
+    657         # prepare decoder_input_ids
+--> 658         if (
+    659             labels is not None
+    660             and self.model is not None
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(660)__call__()
+    658         if (
+    659             labels is not None
+--> 660             and self.model is not None
+    661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+    662         ):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(658)__call__()
+    656 
+    657         # prepare decoder_input_ids
+--> 658         if (
+    659             labels is not None
+    660             and self.model is not None
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(661)__call__()
+    659             labels is not None
+    660             and self.model is not None
+--> 661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+    662         ):
+    663             decoder_input_ids = self.model.prepare_decoder_input_ids_from_labels(labels=batch["labels"])
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(658)__call__()
+    656 
+    657         # prepare decoder_input_ids
+--> 658         if (
+    659             labels is not None
+    660             and self.model is not None
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(663)__call__()
+    661             and hasattr(self.model, "prepare_decoder_input_ids_from_labels")
+    662         ):
+--> 663             decoder_input_ids = self.model.prepare_decoder_input_ids_from_labels(labels=batch["labels"])
+    664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(664)__call__()
+    662         ):
+    663             decoder_input_ids = self.model.prepare_decoder_input_ids_from_labels(labels=batch["labels"])
+--> 664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+    666         return batch
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(666)__call__()
+    664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+--> 666         return batch
+    667 
+    668 
+
+--Return--
+{'input_ids':...[  0, 322]])>}
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(666)__call__()
+    664             batch["decoder_input_ids"] = decoder_input_ids
+    665 
+--> 666         return batch
+    667 
+    668 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(290)_get_output_signature()
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+    289             test_batch = collate_fn(test_batch, **collate_fn_args)
+--> 290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+    292         tf_columns_to_signatures = {}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(283)_get_output_signature()
+    281 
+    282         test_batches = []
+--> 283         for _ in range(num_test_batches):
+    284             indices = sample(range(len(dataset)), test_batch_size)
+    285             test_batch = dataset[indices]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(284)_get_output_signature()
+    282         test_batches = []
+    283         for _ in range(num_test_batches):
+--> 284             indices = sample(range(len(dataset)), test_batch_size)
+    285             test_batch = dataset[indices]
+    286             if cols_to_retain is not None:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(285)_get_output_signature()
+    283         for _ in range(num_test_batches):
+    284             indices = sample(range(len(dataset)), test_batch_size)
+--> 285             test_batch = dataset[indices]
+    286             if cols_to_retain is not None:
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(286)_get_output_signature()
+    284             indices = sample(range(len(dataset)), test_batch_size)
+    285             test_batch = dataset[indices]
+--> 286             if cols_to_retain is not None:
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(287)_get_output_signature()
+    285             test_batch = dataset[indices]
+    286             if cols_to_retain is not None:
+--> 287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+    289             test_batch = collate_fn(test_batch, **collate_fn_args)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(288)_get_output_signature()
+    286             if cols_to_retain is not None:
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+--> 288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+    289             test_batch = collate_fn(test_batch, **collate_fn_args)
+    290             test_batches.append(test_batch)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(289)_get_output_signature()
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+--> 289             test_batch = collate_fn(test_batch, **collate_fn_args)
+    290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(590)__call__()
+    588         import pdb; pdb.set_trace()
+    589         print(return_tensors)
+--> 590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+*** NameError: name 'cd' is not defined
+*** NameError: name 'cd' is not defined
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+*** NameError: name 'cd' is not defined
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(292)_get_output_signature()
+    290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+--> 292         tf_columns_to_signatures = {}
+    293         np_columns_to_dtypes = {}
+    294         for column in test_batches[0].keys():
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1517)prepare_tf_dataset()
+   1515         label_cols = label_cols[0] if len(label_cols) == 1 else label_cols
+   1516         import pdb;pdb.set_trace()
+-> 1517         if drop_remainder is None:
+   1518             drop_remainder = shuffle
+   1519         tf_dataset = dataset.to_tf_dataset(
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1518)prepare_tf_dataset()
+   1516         import pdb;pdb.set_trace()
+   1517         if drop_remainder is None:
+-> 1518             drop_remainder = shuffle
+   1519         tf_dataset = dataset.to_tf_dataset(
+   1520             columns=feature_cols,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1519)prepare_tf_dataset()
+   1517         if drop_remainder is None:
+   1518             drop_remainder = shuffle
+-> 1519         tf_dataset = dataset.to_tf_dataset(
+   1520             columns=feature_cols,
+   1521             label_cols=label_cols,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1520)prepare_tf_dataset()
+   1518             drop_remainder = shuffle
+   1519         tf_dataset = dataset.to_tf_dataset(
+-> 1520             columns=feature_cols,
+   1521             label_cols=label_cols,
+   1522             batch_size=batch_size,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1521)prepare_tf_dataset()
+   1519         tf_dataset = dataset.to_tf_dataset(
+   1520             columns=feature_cols,
+-> 1521             label_cols=label_cols,
+   1522             batch_size=batch_size,
+   1523             shuffle=shuffle,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1522)prepare_tf_dataset()
+   1520             columns=feature_cols,
+   1521             label_cols=label_cols,
+-> 1522             batch_size=batch_size,
+   1523             shuffle=shuffle,
+   1524             drop_remainder=drop_remainder,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1523)prepare_tf_dataset()
+   1521             label_cols=label_cols,
+   1522             batch_size=batch_size,
+-> 1523             shuffle=shuffle,
+   1524             drop_remainder=drop_remainder,
+   1525             collate_fn=collate_fn,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1524)prepare_tf_dataset()
+   1522             batch_size=batch_size,
+   1523             shuffle=shuffle,
+-> 1524             drop_remainder=drop_remainder,
+   1525             collate_fn=collate_fn,
+   1526             collate_fn_args=collate_fn_args,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1525)prepare_tf_dataset()
+   1523             shuffle=shuffle,
+   1524             drop_remainder=drop_remainder,
+-> 1525             collate_fn=collate_fn,
+   1526             collate_fn_args=collate_fn_args,
+   1527             prefetch=prefetch,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1526)prepare_tf_dataset()
+   1524             drop_remainder=drop_remainder,
+   1525             collate_fn=collate_fn,
+-> 1526             collate_fn_args=collate_fn_args,
+   1527             prefetch=prefetch,
+   1528         )
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1527)prepare_tf_dataset()
+   1525             collate_fn=collate_fn,
+   1526             collate_fn_args=collate_fn_args,
+-> 1527             prefetch=prefetch,
+   1528         )
+   1529         return tf_dataset
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1519)prepare_tf_dataset()
+   1517         if drop_remainder is None:
+   1518             drop_remainder = shuffle
+-> 1519         tf_dataset = dataset.to_tf_dataset(
+   1520             columns=feature_cols,
+   1521             label_cols=label_cols,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(429)to_tf_dataset()
+    427             )
+    428         import pdb;pdb.set_trace()
+--> 429         if collate_fn is None:
+    430             # Set a very simple default collator that just stacks things together
+    431             collate_fn = minimal_tf_collate_fn
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(432)to_tf_dataset()
+    430             # Set a very simple default collator that just stacks things together
+    431             collate_fn = minimal_tf_collate_fn
+--> 432         if collate_fn_args is None:
+    433             collate_fn_args = {}
+    434         if label_cols and not columns:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(434)to_tf_dataset()
+    432         if collate_fn_args is None:
+    433             collate_fn_args = {}
+--> 434         if label_cols and not columns:
+    435             raise ValueError("Cannot specify label_cols without specifying columns!")
+    436         if label_cols is None:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(436)to_tf_dataset()
+    434         if label_cols and not columns:
+    435             raise ValueError("Cannot specify label_cols without specifying columns!")
+--> 436         if label_cols is None:
+    437             label_cols = []
+    438         elif isinstance(label_cols, str):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(438)to_tf_dataset()
+    436         if label_cols is None:
+    437             label_cols = []
+--> 438         elif isinstance(label_cols, str):
+    439             label_cols = [label_cols]
+    440         if len(set(label_cols)) < len(label_cols):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(439)to_tf_dataset()
+    437             label_cols = []
+    438         elif isinstance(label_cols, str):
+--> 439             label_cols = [label_cols]
+    440         if len(set(label_cols)) < len(label_cols):
+    441             raise ValueError("List of label_cols contains duplicates.")
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(440)to_tf_dataset()
+    438         elif isinstance(label_cols, str):
+    439             label_cols = [label_cols]
+--> 440         if len(set(label_cols)) < len(label_cols):
+    441             raise ValueError("List of label_cols contains duplicates.")
+    442         if columns:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(442)to_tf_dataset()
+    440         if len(set(label_cols)) < len(label_cols):
+    441             raise ValueError("List of label_cols contains duplicates.")
+--> 442         if columns:
+    443             if isinstance(columns, str):
+    444                 columns = [columns]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(443)to_tf_dataset()
+    441             raise ValueError("List of label_cols contains duplicates.")
+    442         if columns:
+--> 443             if isinstance(columns, str):
+    444                 columns = [columns]
+    445             if len(set(columns)) < len(columns):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(445)to_tf_dataset()
+    443             if isinstance(columns, str):
+    444                 columns = [columns]
+--> 445             if len(set(columns)) < len(columns):
+    446                 raise ValueError("List of columns contains duplicates.")
+    447             cols_to_retain = list(set(columns + label_cols))
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(447)to_tf_dataset()
+    445             if len(set(columns)) < len(columns):
+    446                 raise ValueError("List of columns contains duplicates.")
+--> 447             cols_to_retain = list(set(columns + label_cols))
+    448         else:
+    449             cols_to_retain = None  # Indicates keeping all valid columns
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(452)to_tf_dataset()
+    450             columns = []
+    451 
+--> 452         if self.format["type"] not in ["custom", "numpy"]:
+    453             dataset = self.with_format("numpy")
+    454         else:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(453)to_tf_dataset()
+    451 
+    452         if self.format["type"] not in ["custom", "numpy"]:
+--> 453             dataset = self.with_format("numpy")
+    454         else:
+    455             dataset = self
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(458)to_tf_dataset()
+    456 
+    457         # TODO(Matt, QL): deprecate the retention of label_ids and label
+--> 458         print("after formatting to numpy")
+    459         output_signature, columns_to_np_types = dataset._get_output_signature(
+    460             dataset,
+
+Dataset({
+    features: ['input_ids', 'attention_mask', 'labels'],
+    num_rows: 10
+})
+array([[322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1],
+       [322,   1]])
+after formatting to numpy
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(459)to_tf_dataset()
+    457         # TODO(Matt, QL): deprecate the retention of label_ids and label
+    458         print("after formatting to numpy")
+--> 459         output_signature, columns_to_np_types = dataset._get_output_signature(
+    460             dataset,
+    461             collate_fn=collate_fn,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(460)to_tf_dataset()
+    458         print("after formatting to numpy")
+    459         output_signature, columns_to_np_types = dataset._get_output_signature(
+--> 460             dataset,
+    461             collate_fn=collate_fn,
+    462             collate_fn_args=collate_fn_args,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(461)to_tf_dataset()
+    459         output_signature, columns_to_np_types = dataset._get_output_signature(
+    460             dataset,
+--> 461             collate_fn=collate_fn,
+    462             collate_fn_args=collate_fn_args,
+    463             cols_to_retain=cols_to_retain,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(462)to_tf_dataset()
+    460             dataset,
+    461             collate_fn=collate_fn,
+--> 462             collate_fn_args=collate_fn_args,
+    463             cols_to_retain=cols_to_retain,
+    464             batch_size=batch_size if drop_remainder else None,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(463)to_tf_dataset()
+    461             collate_fn=collate_fn,
+    462             collate_fn_args=collate_fn_args,
+--> 463             cols_to_retain=cols_to_retain,
+    464             batch_size=batch_size if drop_remainder else None,
+    465             num_test_batches=num_test_batches,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(464)to_tf_dataset()
+    462             collate_fn_args=collate_fn_args,
+    463             cols_to_retain=cols_to_retain,
+--> 464             batch_size=batch_size if drop_remainder else None,
+    465             num_test_batches=num_test_batches,
+    466         )
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(465)to_tf_dataset()
+    463             cols_to_retain=cols_to_retain,
+    464             batch_size=batch_size if drop_remainder else None,
+--> 465             num_test_batches=num_test_batches,
+    466         )
+    467         print("second get signature ran")
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(459)to_tf_dataset()
+    457         # TODO(Matt, QL): deprecate the retention of label_ids and label
+    458         print("after formatting to numpy")
+--> 459         output_signature, columns_to_np_types = dataset._get_output_signature(
+    460             dataset,
+    461             collate_fn=collate_fn,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(590)__call__()
+    588         import pdb; pdb.set_trace()
+    589         print(return_tensors)
+--> 590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+
+[{'input_ids': array([   259, 143837, 151546,    399,      1]), 'attention_mask': array([1, 1, 1, 1, 1]), 'labels': array([322,   1])}]
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(591)__call__()
+    589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+--> 591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+    592         # reconvert list[None] to None if necessary
+    593         # this might occur when we pass {..., "labels": None}
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(594)__call__()
+    592         # reconvert list[None] to None if necessary
+    593         # this might occur when we pass {..., "labels": None}
+--> 594         if labels is not None and all(label is None for label in labels):
+    595             labels = None
+    596         non_labels_features = [{k: v for k, v in feature.items() if k != label_name} for feature in features]
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(596)__call__()
+    594         if labels is not None and all(label is None for label in labels):
+    595             labels = None
+--> 596         non_labels_features = [{k: v for k, v in feature.items() if k != label_name} for feature in features]
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(599)__call__()
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+--> 599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+    601             non_labels_features,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(600)__call__()
+    598         # run through tokenizer without labels to ensure no side effects
+    599         batch = pad_without_fast_tokenizer_warning(
+--> 600             self.tokenizer,
+    601             non_labels_features,
+    602             padding=self.padding,
+
+[{'input_ids': array([   259, 143837, 151546,    399,      1]), 'attention_mask': array([1, 1, 1, 1, 1])}]
+[array([322,   1])]
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(601)__call__()
+    599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+--> 601             non_labels_features,
+    602             padding=self.padding,
+    603             max_length=self.max_length,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(602)__call__()
+    600             self.tokenizer,
+    601             non_labels_features,
+--> 602             padding=self.padding,
+    603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(603)__call__()
+    601             non_labels_features,
+    602             padding=self.padding,
+--> 603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+    605             return_tensors=return_tensors,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(604)__call__()
+    602             padding=self.padding,
+    603             max_length=self.max_length,
+--> 604             pad_to_multiple_of=self.pad_to_multiple_of,
+    605             return_tensors=return_tensors,
+    606         )
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(605)__call__()
+    603             max_length=self.max_length,
+    604             pad_to_multiple_of=self.pad_to_multiple_of,
+--> 605             return_tensors=return_tensors,
+    606         )
+    607 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(599)__call__()
+    597 
+    598         # run through tokenizer without labels to ensure no side effects
+--> 599         batch = pad_without_fast_tokenizer_warning(
+    600             self.tokenizer,
+    601             non_labels_features,
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(609)__call__()
+    607 
+    608         # we have to pad the labels manually as we cannot rely on `tokenizer.pad` and we need them to be of the same length to return tensors
+--> 609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+    610         if labels is not None:
+    611             if no_padding:
+
+{'input_ids': <tf.Tensor: shape=(1, 5), dtype=int32, numpy=array([[   259, 143837, 151546,    399,      1]], dtype=int32)>, 'attention_mask': <tf.Tensor: shape=(1, 5), dtype=int32, numpy=array([[1, 1, 1, 1, 1]], dtype=int32)>}
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(610)__call__()
+    608         # we have to pad the labels manually as we cannot rely on `tokenizer.pad` and we need them to be of the same length to return tensors
+    609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+--> 610         if labels is not None:
+    611             if no_padding:
+    612                 if isinstance(features[0][label_name], list):
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(611)__call__()
+    609         no_padding = self.padding is False or self.padding == PaddingStrategy.DO_NOT_PAD
+    610         if labels is not None:
+--> 611             if no_padding:
+    612                 if isinstance(features[0][label_name], list):
+    613                     batch["labels"] = list(labels)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(617)__call__()
+    615                     batch["labels"] = [np.concatenate([label, []]) for label in labels]
+    616             else:
+--> 617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+    618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+    619                 if self.pad_to_multiple_of is not None:
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(618)__call__()
+    616             else:
+    617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+--> 618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+    619                 if self.pad_to_multiple_of is not None:
+    620                     max_label_length = (
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(619)__call__()
+    617                 max_padding = self.padding == PaddingStrategy.MAX_LENGTH and self.max_length is not None
+    618                 max_label_length = max(len(l) for l in labels) if not max_padding else self.max_length
+--> 619                 if self.pad_to_multiple_of is not None:
+    620                     max_label_length = (
+    621                         (max_label_length + self.pad_to_multiple_of - 1)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(626)__call__()
+    624                     )
+    625 
+--> 626                 padding_side = self.tokenizer.padding_side
+    627                 if isinstance(features[0][label_name], list):
+    628                     batch["labels"] = [
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(627)__call__()
+    625 
+    626                 padding_side = self.tokenizer.padding_side
+--> 627                 if isinstance(features[0][label_name], list):
+    628                     batch["labels"] = [
+    629                         label + [self.label_pad_token_id] * (max_label_length - len(label))
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(635)__call__()
+    633                     ]
+    634                 else:
+--> 635                     batch["labels"] = [
+    636                         np.concatenate([label, [self.label_pad_token_id] * (max_label_length - len(label))])
+    637                         if padding_side == "right"
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(639)__call__()
+    637                         if padding_side == "right"
+    638                         else np.concatenate([[self.label_pad_token_id] * (max_label_length - len(label)), label])
+--> 639                         for label in labels
+    640                     ]
+    641 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(635)__call__()
+    633                     ]
+    634                 else:
+--> 635                     batch["labels"] = [
+    636                         np.concatenate([label, [self.label_pad_token_id] * (max_label_length - len(label))])
+    637                         if padding_side == "right"
+
+*** KeyError: 'labels'
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(643)__call__()
+    641 
+    642         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
+--> 643         if batch.get("labels", None) is not None:
+    644             if return_tensors == "pt":
+    645                 import torch
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(644)__call__()
+    642         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
+    643         if batch.get("labels", None) is not None:
+--> 644             if return_tensors == "pt":
+    645                 import torch
+    646 
+
+[array([322.,   1.])]
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(648)__call__()
+    646 
+    647                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
+--> 648             elif return_tensors == "tf":
+    649                 import tensorflow as tf
+    650 
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(649)__call__()
+    647                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
+    648             elif return_tensors == "tf":
+--> 649                 import tensorflow as tf
+    650 
+    651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(651)__call__()
+    649                 import tensorflow as tf
+    650 
+--> 651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+    652             else:
+    653                 batch["labels"] = np.array(batch["labels"], dtype=np.int64)
+
+TypeError: Cannot convert [array([322.,   1.])] to EagerTensor of dtype int64
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(651)__call__()
+    649                 import tensorflow as tf
+    650 
+--> 651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+    652             else:
+    653                 batch["labels"] = np.array(batch["labels"], dtype=np.int64)
+
+--Return--
+None
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(651)__call__()
+    649                 import tensorflow as tf
+    650 
+--> 651                 batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+    652             else:
+    653                 batch["labels"] = np.array(batch["labels"], dtype=np.int64)
+
+TypeError: Cannot convert [array([322.,   1.])] to EagerTensor of dtype int64
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(289)_get_output_signature()
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+--> 289             test_batch = collate_fn(test_batch, **collate_fn_args)
+    290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+
+--Return--
+None
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(289)_get_output_signature()
+    287                 test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288             test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+--> 289             test_batch = collate_fn(test_batch, **collate_fn_args)
+    290             test_batches.append(test_batch)
+    291         import pdb; pdb.set_trace()
+
+TypeError: Cannot convert [array([322.,   1.])] to EagerTensor of dtype int64
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(459)to_tf_dataset()
+    457         # TODO(Matt, QL): deprecate the retention of label_ids and label
+    458         print("after formatting to numpy")
+--> 459         output_signature, columns_to_np_types = dataset._get_output_signature(
+    460             dataset,
+    461             collate_fn=collate_fn,
+
+--Return--
+None
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py(459)to_tf_dataset()
+    457         # TODO(Matt, QL): deprecate the retention of label_ids and label
+    458         print("after formatting to numpy")
+--> 459         output_signature, columns_to_np_types = dataset._get_output_signature(
+    460             dataset,
+    461             collate_fn=collate_fn,
+
+TypeError: Cannot convert [array([322.,   1.])] to EagerTensor of dtype int64
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1519)prepare_tf_dataset()
+   1517         if drop_remainder is None:
+   1518             drop_remainder = shuffle
+-> 1519         tf_dataset = dataset.to_tf_dataset(
+   1520             columns=feature_cols,
+   1521             label_cols=label_cols,
+
+--Return--
+None
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py(1519)prepare_tf_dataset()
+   1517         if drop_remainder is None:
+   1518             drop_remainder = shuffle
+-> 1519         tf_dataset = dataset.to_tf_dataset(
+   1520             columns=feature_cols,
+   1521             label_cols=label_cols,
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+/home/pavithra/projects/Natural-Language-Processing/project_3_text_summarization/check_the_work/Untitled0.ipynb Cell 20 line 1
+----> 1 tf_train_dataset = model.prepare_tf_dataset(
+      2     tokenized_data["train"],
+      3     collate_fn=data_collator,
+      4     tokenizer=tokenizer,
+      5     shuffle=True,
+      6     batch_size=8,
+      7 )
+      9 # tf_eval_dataset = model.prepare_tf_dataset(
+     10 #     tokenized_data["validation"],
+     11 #     collate_fn=data_collator,
+     12 #     shuffle=False,
+     13 #     batch_size=8,
+     14 # )
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/modeling_tf_utils.py:1519, in TFPreTrainedModel.prepare_tf_dataset(self, dataset, batch_size, shuffle, tokenizer, collate_fn, collate_fn_args, drop_remainder, prefetch)
+   1517 if drop_remainder is None:
+   1518     drop_remainder = shuffle
+-> 1519 tf_dataset = dataset.to_tf_dataset(
+   1520     columns=feature_cols,
+   1521     label_cols=label_cols,
+   1522     batch_size=batch_size,
+   1523     shuffle=shuffle,
+   1524     drop_remainder=drop_remainder,
+   1525     collate_fn=collate_fn,
+   1526     collate_fn_args=collate_fn_args,
+   1527     prefetch=prefetch,
+   1528 )
+   1529 return tf_dataset
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py:459, in TensorflowDatasetMixin.to_tf_dataset(self, batch_size, columns, shuffle, collate_fn, drop_remainder, collate_fn_args, label_cols, prefetch, num_workers, num_test_batches)
+    457 # TODO(Matt, QL): deprecate the retention of label_ids and label
+    458 print("after formatting to numpy")
+--> 459 output_signature, columns_to_np_types = dataset._get_output_signature(
+    460     dataset,
+    461     collate_fn=collate_fn,
+    462     collate_fn_args=collate_fn_args,
+    463     cols_to_retain=cols_to_retain,
+    464     batch_size=batch_size if drop_remainder else None,
+    465     num_test_batches=num_test_batches,
+    466 )
+    467 print("second get signature ran")
+    468 import pdb;pdb.set_trace()
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/datasets/arrow_dataset.py:289, in TensorflowDatasetMixin._get_output_signature(dataset, collate_fn, collate_fn_args, cols_to_retain, batch_size, num_test_batches)
+    287         test_batch = {key: value for key, value in test_batch.items() if key in cols_to_retain}
+    288     test_batch = [{key: value[i] for key, value in test_batch.items()} for i in range(test_batch_size)]
+--> 289     test_batch = collate_fn(test_batch, **collate_fn_args)
+    290     test_batches.append(test_batch)
+    291 import pdb; pdb.set_trace()
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py:651, in DataCollatorForSeq2Seq.__call__(self, features, return_tensors)
+    648 elif return_tensors == "tf":
+    649     import tensorflow as tf
+--> 651     batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+    652 else:
+    653     batch["labels"] = np.array(batch["labels"], dtype=np.int64)
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py:263, in constant(value, dtype, shape, name)
+    166 @tf_export("constant", v1=[])
+    167 def constant(value, dtype=None, shape=None, name="Const"):
+    168   """Creates a constant tensor from a tensor-like object.
+    169 
+    170   Note: All eager `tf.Tensor` values are immutable (in contrast to
+   (...)
+    261     ValueError: if called on a symbolic tensor.
+    262   """
+--> 263   return _constant_impl(value, dtype, shape, name, verify_shape=False,
+    264                         allow_broadcast=True)
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py:275, in _constant_impl(value, dtype, shape, name, verify_shape, allow_broadcast)
+    273     with trace.Trace("tf.constant"):
+    274       return _constant_eager_impl(ctx, value, dtype, shape, verify_shape)
+--> 275   return _constant_eager_impl(ctx, value, dtype, shape, verify_shape)
+    277 const_tensor = ops._create_graph_constant(  # pylint: disable=protected-access
+    278     value, dtype, shape, name, verify_shape, allow_broadcast
+    279 )
+    280 return const_tensor
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py:285, in _constant_eager_impl(ctx, value, dtype, shape, verify_shape)
+    283 def _constant_eager_impl(ctx, value, dtype, shape, verify_shape):
+    284   """Creates a constant on the current device."""
+--> 285   t = convert_to_eager_tensor(value, ctx, dtype)
+    286   if shape is None:
+    287     return t
+
+File ~/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py:98, in convert_to_eager_tensor(value, ctx, dtype)
+     96     dtype = dtypes.as_dtype(dtype).as_datatype_enum
+     97 ctx.ensure_initialized()
+---> 98 return ops.EagerTensor(value, ctx.device_name, dtype)
+
+TypeError: Cannot convert [array([322.,   1.])] to EagerTensor of dtype int64
+<tf.Tensor: shape=(2, 2), dtype=int64, numpy=
+array([[322,   1],
+       [322,   1]])>
+Some weights of PegasusForConditionalGeneration were not initialized from the model checkpoint at google/pegasus-cnn_dailymail and are newly initialized: ['model.decoder.embed_positions.weight', 'model.encoder.embed_positions.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+device(type='cpu')
+
+'4.41.1'
+['▁some', 'h', 'ting', '▁for', '▁my', '▁', 'understanding', '</s>']
+{'input_ids': [2155, 334, 1821, 332, 1037, 259, 36194, 1], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1]}
+1000000000000000019884624838656
+Could not render content for 'application/vnd.jupyter.widget-view+json'
+{"model_id":"a13736c05ee348cbbb28874d074f6866","version_major":2,"version_minor":0}
+Could not render content for 'application/vnd.jupyter.widget-view+json'
+{"model_id":"33368715375946fb84674fc557dd0e11","version_major":2,"version_minor":0}
+<class 'datasets.dataset_dict.DatasetDict'>
+('tokenizer/tokenizer_config.json',
+ 'tokenizer/special_tokens_map.json',
+ 'tokenizer/spiece.model',
+ 'tokenizer/added_tokens.json',
+ 'tokenizer/tokenizer.json')
+Could not render content for 'application/vnd.jupyter.widget-view+json'
+{"model_id":"9e460dfb68d740aa928644d9abbb2203","version_major":2,"version_minor":0}
+DatasetDict({
+    train: Dataset({
+        features: ['document', 'summary', 'input_ids', 'attention_mask', 'labels'],
+        num_rows: 10
+    })
+    validation: Dataset({
+        features: ['document', 'summary', 'input_ids', 'attention_mask', 'labels'],
+        num_rows: 10
+    })
+})
+0
+DatasetDict({
+    train: Dataset({
+        features: ['input_ids', 'attention_mask', 'labels'],
+        num_rows: 10
+    })
+    validation: Dataset({
+        features: ['input_ids', 'attention_mask', 'labels'],
+        num_rows: 10
+    })
+})
+{'input_ids': [5139, 259, 15241, 15570, 1],
+ 'attention_mask': [1, 1, 1, 1, 1],
+ 'labels': [322, 1]}
+[{'input_ids': [5139, 259, 15241, 15570, 1],
+  'attention_mask': [1, 1, 1, 1, 1],
+  'labels': [322, 1]},
+ {'input_ids': [259, 23129, 259, 91074, 1],
+  'attention_mask': [1, 1, 1, 1, 1],
+  'labels': [322, 1]}]
+[{'input_ids': [5139, 259, 15241, 15570, 1], 'attention_mask': [1, 1, 1, 1, 1], 'labels': [322, 1]}, {'input_ids': [259, 23129, 259, 91074, 1], 'attention_mask': [1, 1, 1, 1, 1], 'labels': [322, 1]}]
+> /home/pavithra/projects/Natural-Language-Processing/venv_text_summarizaition/lib/python3.8/site-packages/transformers/data/data_collator.py(589)__call__()
+    587             return_tensors = self.return_tensors
+    588         import pdb; pdb.set_trace()
+--> 589         print(return_tensors)
+    590         label_name = "label" if "label" in features[0].keys() else "labels"
+    591         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
+
+tf
+{'input_ids': <tf.Tensor: shape=(2, 5), dtype=int32, numpy=
+array([[ 5139,   259, 15241, 15570,     1],
+       [  259, 23129,   259, 91074,     1]], dtype=int32)>, 'attention_mask': <tf.Tensor: shape=(2, 5), dtype=int32, numpy=
+array([[1, 1, 1, 1, 1],
+       [1, 1, 1, 1, 1]], dtype=int32)>, 'labels': <tf.Tensor: shape=(2, 2), dtype=int64, numpy=
+array([[322,   1],
+       [322,   1]])>, 'decoder_input_ids': <tf.Tensor: shape=(2, 2), dtype=int64, numpy=
+array([[  0, 322],
+       [  0, 322]])>}

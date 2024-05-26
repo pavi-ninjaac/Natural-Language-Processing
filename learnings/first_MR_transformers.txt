@@ -1,0 +1,105 @@
+While running the model.prepare_tf_dataset() method, 
+it raises the error below:
+```
+TypeError: Cannot convert [array([322.,   1.])] to EagerTensor of dtype int64
+```
+
+This happens, in  "DataCollatorForSeq2Seq" function when we are try
+to convert the labels to tensors. While converting the labels to tensors,
+the labels can be in the format of list of list or list of ndarrays. 
+There is no problem converting the list of list lables. There is a problem
+when the list of ndarrays are float values(like below).
+
+```
+[array([322.,   1.])]
+```
+
+so the exception raises while trying to convert this label to tensors using 
+below code.
+
+```
+batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+```
+
+The labels are always integer values, so this got converted to float 
+values in the label padding operation below.
+```
+batch["labels"] = [
+                    call(label)
+                    if padding_side == "right"
+                    else np.concatenate([[self.label_pad_token_id] * (max_label_length - len(label)), label])
+                    for label in labels
+                    ]
+```
+Here we have 2 cases:
+1 - Concatenating an array having integer padding token value with labels.
+2 - Concatenating an empty array with labels.
+
+
+----------------------------------------------------------------------------------------
+case 1: Concatenating an array having integer padding token value with labels.
+WORKS EXPECTED: 
+----------------------------------------------------------------------------------------
+```
+label = np.array([233, 1])
+max_label_length = 4
+label_pad_token_id = -100
+np.concatenate([[label_pad_token_id] * (max_label_length - len(label)), label])
+# math np.concatenate([ [-100] * 2 , labels])
+o/p:
+array([-100, -100,  233,    1])
+```
+
+----------------------------------------------------------------------------------------
+Case 2: Concatenating an empty array with labels.
+GIVES THE ISSUE:
+This scenorio can happen when the label has the maximum label length -- No padding needed.
+----------------------------------------------------------------------------------------
+```
+label = np.array([233, 1])
+max_label_length = 2
+label_pad_token_id = -100
+np.concatenate([[label_pad_token_id] * (max_label_length - len(label)), label])
+# math np.concatenate([ [-100] * 0 , labels])
+o/p:
+array([233.,   1.])
+```
+
+----------------------------------------------------------------------------------------
+Solution:
+----------------------------------------------------------------------------------------
+We need to concatenate a ndarray of dtype int with labels.
+
+AFTER FIX:
+----------
+case 1:
+```
+
+label = np.array([233, 1])
+max_label_length = 4
+label_pad_token_id = -100
+np.concatenate([np.array([label_pad_token_id] * (max_label_length - len(label)), dtype=np.int64),label])
+
+o/p:
+array([-100, -100,  233,    1])
+```
+
+
+case 2:
+```
+
+label = np.array([233, 1])
+max_label_length = 2
+label_pad_token_id = -100
+np.concatenate([np.array([label_pad_token_id] * (max_label_length - len(label)), dtype=np.int64),label])
+
+
+o/p:
+array([233,   1])
+```
+
+
+https://github.com/huggingface/transformers/pull/31109
+
+issue link:
+https://github.com/huggingface/transformers/issues/31112
