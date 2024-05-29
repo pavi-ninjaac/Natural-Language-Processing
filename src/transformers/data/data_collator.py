@@ -647,7 +647,12 @@ class DataCollatorForSeq2Seq:
             elif return_tensors == "tf":
                 import tensorflow as tf
 
-                batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+                if isinstance(features[0][label_name], list):
+                    batch["labels"] = tf.constant(batch["labels"], dtype=tf.int64)
+
+                elif isinstance(features[0][label_name], np.ndarray):
+                    labels: np.ndarray = np.stack(batch["labels"])
+                    batch["labels"] = tf.constant(labels, dtype=tf.int64)
             else:
                 batch["labels"] = np.array(batch["labels"], dtype=np.int64)
         else:
